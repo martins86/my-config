@@ -1,31 +1,14 @@
-alias c="reset"
+FORCE_COLOR_PROMPT=YES
+FORCE_COLOR=1
 
+alias ng="C:/Users/tmdfrei/AppData/Roaming/npm/node_modules/@angular/cli/bin/ng"
+  
+alias c="reset"
 alias status="git status -s"
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
-
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\n'
-PS1+='[\t]'
-PS1+=' - '
-PS1+='\u\[\033[0;36m\]'
-PS1+=' @ '
-PS1+='\[\033[0;36m\]\h'
-PS1+=' \[\033[38;5;13m\]<`pwd | sed "s#\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\).*\(/[^/]\{1,\}/[^/]\{1,\}\)/\{0,1\}#\1_\2#g"`>\[\033[38;5;13m\]:'
-PS1+='\[\033[0;32m\]\n'
-PS1+='\[\033[0;32m\]|\[\033[0m\033[0;32m\] '
-PS1+='\[\033[0;32m\]\n'
-PS1+='\[\033[0;32m\]└─\[\033[0m\033[0;32m\] '
-PS1+='\$\[\033[0m\033[0;32m\]\[\033[38;5;1m\]$(parse_git_branch)\[\033[38;5;1m\]'
-PS1+='\[\033[0;32m\] ▶\[\033[0m\] '
-export PS1
-
-
 
 # get current branch in git repo
 function parse_git_branch() {
@@ -33,9 +16,9 @@ function parse_git_branch() {
 	if [ ! "${BRANCH}" == "" ]
 	then
 		STAT=`parse_git_dirty`
-		echo "[${BRANCH}${STAT}]"
+		echo " [ ${BRANCH}${STAT} ] "
 	else
-		echo ""
+		echo " $ "
 	fi
 }
 
@@ -74,4 +57,24 @@ function parse_git_dirty {
 	fi
 }
 
-export PS1="\`parse_git_branch\` "
+PS1='\[\033[0;32m\]'
+PS1+='\n'
+PS1+='[\t]'
+PS1+=' - '
+PS1+='\u'
+PS1+='\[\033[0;36m\]'
+PS1+=' @ '
+PS1+='\h'
+PS1+='\[\033[0;35m\]'
+PS1+=' ~`pwd | sed "s#\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\).*\(/[^/]\{1,\}/[^/]\{1,\}\)/\{0,1\}#\1_\2#g"`:'
+PS1+='\[\033[0;32m\]'
+PS1+='\n'
+PS1+='\[\033[0;32m\]'
+PS1+='|'
+PS1+='\n'
+PS1+='└─'
+PS1+='$(parse_git_branch)'
+PS1+='▶ '
+PS1+=' \[\033[0m\]'
+
+export PS1
